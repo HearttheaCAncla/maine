@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Sekuya&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+body {
+    display:flex;
+    min-height:500px;
+    background-color: #636CCB;
+    justify-content:center;
+    align-items:center;
+    margin:0;
+}
+
+.menuBox {
+    height: 300px;
+    width: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.menuBox img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    z-index: 0;
+}
+
+.menuBox p,
+.menuBox a {
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-family: "Sekuya", system-ui;
+    font-weight: 100;
+    font-style:normal;
+    font-size:20px;
+    margin-bottom:0%;
+    margin-top:1rem;
+}
+
+.subh, a, p {
+    margin-top:0%;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.button {
+    margin-top:20%;
+    margin-bottom:7%;
+    font-size: 1rem;
+    border-radius: 100px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    background-color: #91ADC8;
+    color:white;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    line-height: .5rem;
+    padding: 15px;
+    font-size:larger;  
+}
+
+.button:hover {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+/*pg2*/
+.p2bg {
+    width: 100vw;
+    height: 400px;
+    background-color: white;
+
+}
+
+.iconRow {
+    display:flex;
+    justify-content: space-evenly;
+    min-height: 400px;
+    align-items:center;
+    
+    
+}
+
+.icons {
+    height: 150px;
+    width: 150px;
+    text-align:center;
+}
+
+.icons img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    animation: bounce 1.5s infinite;
+}
+
+a {
+    text-decoration: none;
+    color:black;
+}
+
+.iconText {
+    position: relative;
+    display: inline-block;
+}
+
+/* ping on the word ONLY */
+.iconText::after {
+    content: "";
+    position: absolute;
+    top: 4;  
+    right: -9px;  
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: red;
+}
+
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-10%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/*letter page*/
+.cardCont {
+    position: relative;
+    width:400px;
+    height:500px;
+}
+.card{
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius: 10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size: 48px;
+    background-color:white;
+    user-select:none;
+    transition: transform 0.3s, opacity 0.3s ease;
+}
+
+.card:not(:last-child){
+    top:15px;
+}
