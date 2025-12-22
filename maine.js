@@ -51,7 +51,7 @@ container.addEventListener("mouseup", (e)=>{
     handleSwipe(deltaX);
 });
 
-container.addEventListener("touchStart", (e)=> {
+container.addEventListener("touchstart", (e)=> {
     currentCard = getTopCard();
     if(!currentCard) return;
     isDragging = true;
@@ -59,12 +59,12 @@ container.addEventListener("touchStart", (e)=> {
     currentCard.style.transition="none";
 });
 
-container.addEventListener("touchMove", (e)=> {
+container.addEventListener("touchmove", (e)=> {
     if(!isDragging || !currentCard) return;
     const deltaX = e.touches[0].clientX - startX;
     currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX/10}deg)`
 });
-container.addEventListener("touchEnd", (e)=> {
+container.addEventListener("touchend", (e)=> {
     if(!isDragging || !currentCard) return;
     const deltaX= e.changedTouches[0].clientX - startX;
     handleSwipe(deltaX);
@@ -86,3 +86,4 @@ function handleSwipe(deltaX) {
     }
     isDragging =  false;
 }
+
