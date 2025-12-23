@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Sekuya&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+html {
+    font-size:16px;
+    overflow:hidden;
+}
 
 body {
     display:flex;
@@ -8,6 +12,7 @@ body {
     justify-content:center;
     align-items:center;
     margin:0;
+    overflow:hidden;
 }
 
 .menuBox {
@@ -77,7 +82,7 @@ body {
 }
 /*pg2*/
 .p2bg {
-    width: 100vw;
+    width: 100svw;
     height: 400px;
     background-color: white;
 
@@ -119,7 +124,7 @@ a {
 .iconText::after {
     content: "";
     position: absolute;
-    top: 4;  
+    top: 4px;  
     right: -9px;  
     width: 7px;
     height: 7px;
@@ -127,6 +132,9 @@ a {
     background-color: red;
 }
 
+.iconText.visited::after {
+    display: none; /* hides the dot */
+}
 
 @keyframes bounce {
   0%, 100% {
@@ -162,3 +170,389 @@ a {
 .card:not(:last-child){
     top:15px;
 }
+
+/*photo page*/
+.container.swiper {
+    width: 90%;
+    max-width: 900px;
+    position: relative;
+    display:flex;
+}
+
+.card-wrapper {
+    display:flex;
+    margin: 0 60px 35px;
+    padding: 20px 0px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 22px;
+}
+
+.card-list .card-item .card-image {
+    width:100%;
+    user-select:none;
+    display:block;
+    overflow: hidden;
+    box-sizing: border-box;
+    list-style: none;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.6);
+}
+
+.card-list .card-link .card-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+.card-list {
+    padding:0px;
+}
+
+.card-item {
+    height: auto;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 40px;  
+  height: 40px;
+  display: flex;  
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;  
+}
+
+:root {
+  --swiper-navigation-color: black;
+  --swiper-pagination-color: black;
+}
+
+/*cake pg*/
+.mic {
+    position:relative;
+    display:block;
+    width: 6rem;
+    height:6rem;
+    border-radius:50%;
+    background-color: crimson;
+    margin-bottom:4rem;
+    border:2px solid #555;
+    transition: border-color 0.2s ease;
+}
+
+.mic::after, .mic::before {
+    --pad: 0rem;
+    content: '';
+    display:block;
+    position:absolute;
+    z-index:0;
+    background-color: rgba(220,20,60,0.2);
+    top:var(--pad);
+    left:var(--pad);
+    right:var(--pad);
+    bottom:var(--pad);
+    border-radius: 50%;
+} 
+
+.mic::after {
+    transition:0.4s;
+}
+
+.mic::before {
+    transition: 0.2s;
+}
+
+.mic span {
+    position:relative;
+    z-index: 1;
+    color: white;
+    font-size:4rem;
+}
+
+.mic.is-recording {
+    border-color: black;
+}
+
+.mic.is-recording::after{
+    animation: smoothPadAfter 0.6s ease-in alternate-reverse forwards infinite;
+}
+.mic.is-recording::before {
+    animation: smoothPadBefore 0.6s ease-in alternate-reverse forwards infinite;
+}
+
+@keyframes smoothPadAfter {
+    0%{inset:-2rem;}
+    100% {inset:-1rem;}
+}
+
+@keyframes smoothPadBefore {
+    0% {inset:-1rem;}
+    100% {inset:-0.5rem;}
+}
+
+/*mobile work*/
+.entireMic {
+    position:relative;
+    z-index: 2;
+}
+
+.cakeCont .button {
+    position:relative;
+    top:10px;
+    white-space:nowrap;
+    opacity:0;
+}
+
+.cakeCont .button.show-btn {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/*cake*/
+.cakeCont {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100svh;
+    width:100svw;
+    gap:2rem;
+    margin:0;
+}
+
+.controls {
+   position: absolute;      /* Pins it relative to the whole screen */
+    bottom: 10%;             /* Always stays 10% away from the bottom */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+.controls::before {
+    content: "Next";         /* Must be same text as button */
+    visibility: hidden;      /* Invisible but still takes up space */
+    padding: 10px 20px;      /* Match your button padding */
+    font-family: serif;      /* Match your button font */
+}
+
+.cake {
+	width: 250px;
+	height: 200px;
+	position:relative;
+}
+
+.cakeCont > p {
+    position:relative;
+    bottom: 30%;
+}
+
+@media (min-width: 1024px) {
+    .controls {
+        width:fit-content;
+        position:absolute;
+        top:30rem;
+    }
+    .cakeCont {
+        padding-bottom:10vh;
+    }
+}
+
+.access,
+.cake {
+	position: absolute;
+}
+
+.access {
+	width: 170px;
+	height: 40px;
+	cursor: pointer;
+	top: 130px;
+	left: -85px;
+	z-index: 4;
+}
+
+.plate {
+	width: 270px;
+	height: 110px;
+	left: -10px;
+	bottom: -10px;
+	background: #c8c8c8;
+	box-shadow: 0 2px 0 #a3a3a3, 0 4px 0 #a3a3a3, 0 5px 40px rgba(0, 0, 0, .5);
+}
+
+.layer,
+.plate {
+	position: absolute;
+	border-radius: 50%;
+}
+
+.layer {
+	width: 250px;
+	height: 100px;
+	background: #553c13;
+	box-shadow: 0 2px 0 #63461a, 0 4px 0 #563a13, 0 6px 0 #553913, 0 8px 0 #543812, 0 10px 0 #533712, 0 12px 0 #523611, 0 14px 0 #513510, 0 16px 0 #50340f, 0 18px 0 #4f330f, 0 20px 0 #4e330e, 0 22px 0 #4d320d, 0 24px 0 #4c310c, 0 26px 0 #4b300c, 0 28px 0 #4a2f0b, 0 30px 0 #492e0a;
+}
+
+.layer-top {
+	top: 0;
+}
+
+.layer-middle {
+	top: 33px;
+}
+
+.layer-bottom {
+	top: 66px;
+}
+
+.icing {
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 92px;
+	background: #fbd6e5;
+}
+
+.icing,
+.icing::before {
+	position: absolute;
+	border-radius: 50%;
+}
+
+.icing::before {
+	content: "";
+	z-index: 1;
+	top: 4px;
+	right: 5px;
+	bottom: 6px;
+	left: 5px;
+	background: #fde6ee;
+	box-shadow: 0 0 4px #ffecf2, 0 0 4px #ffecf2, 0 0 4px #ffecf2;
+}
+
+.drip {
+	position: absolute;
+	width: 50px;
+	height: 60px;
+	background: #fbd6e5;
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
+}
+
+.drip1 {
+	top: 53px;
+	left: 0;
+	width: 40px;
+	height: 49px;
+	transform: skewy(15deg);
+}
+
+.drip2 {
+	top: 69px;
+	left: 181px;
+	transform: skewy(-15deg);
+}
+
+.drip3 {
+	top: 54px;
+	left: 90px;
+	width: 80px;
+	border-bottom-left-radius: 40px;
+	border-bottom-right-radius: 40px;
+}
+
+.candle {
+	height: 50px;
+	top: -20px;
+	background: #7b020b;
+	border-radius: 8px / 4px;
+	z-index: 10;
+}
+
+.candle,
+.candle::before {
+	position: absolute;
+	width: 16px;
+}
+
+.candle::before {
+	content: "";
+	height: 8px;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	background: #901217;
+}
+
+.candle-left {
+	left: 35%;
+	margin-left: -8px;
+	margin-top: 8px;
+}
+
+.candle-centre {
+	left: 50%;
+	margin-left: -8px;
+}
+
+.candle-right {
+	left: 65%;
+	margin-left: -8px;
+	margin-top: 8px;
+}
+
+.flame {
+	position: absolute;
+	width: 15px;
+	height: 35px;
+	top: -34px;
+	left: 50%;
+	margin-left: -7.5px;
+	background: orange;
+	border-radius: 10px 10px 10px 10px / 25px 25px 10px 10px;
+	transform-origin: 50% 90%;
+	z-index: 10;
+	box-shadow: 0 0 10px rgba(255, 165, 0, .5), 0 0 20px rgba(255, 165, 0, .5), 0 0 60px rgba(255, 165, 0, .5), 0 0 80px rgba(255, 165, 0, .5);
+	animation: flicker 1s ease-in-out infinite alternate;
+}
+
+@keyframes flicker {
+	0% {
+		transform: skewx(5deg);
+	}
+
+	25% {
+		transform: skewx(-5deg);
+	}
+
+	50% {
+		transform: skewx(5deg);
+	}
+
+	75% {
+		transform: skewx(-10deg);
+	}
+
+	to {
+		transform: skewx(5deg);
+	}
+}
+
+.flame-flickering {
+	animation: flicker .15s ease-in-out infinite;
+}
+
+.flame-out {
+	opacity: 0;
+	transform: scale(.4) translatey(-20px);
+	animation: none;
+	transition: opacity .4s, transform .4s;
+}
+
