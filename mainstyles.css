@@ -285,6 +285,10 @@ a {
     font-family: "Playfair Display", serif; /* Inherits your bday font */
 }
 
+.cardText{
+    touch-action: pan-y;
+}
+
 .name {
     margin-bottom:0;
     
@@ -754,5 +758,6 @@ a {
 	animation: none;
 	transition: opacity .4s, transform .4s;
 }
+
 
 
