@@ -403,6 +403,26 @@ a {
     height: auto !important;
 }
 
+.swiper-pagination-bullet {
+    width: 10px; /* Keep the visual size small */
+    height: 10px;
+    margin: 0 7px !important; /* Space between the "hitboxes" */
+    position: relative;
+    cursor: pointer;
+}
+
+/* Create the larger hitbox using a pseudo-element */
+.swiper-pagination-bullet::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 35px;  /* This is your actual clickable width */
+    height: 35px; /* This is your actual clickable height */
+    background: transparent; /* Keep it invisible */
+}
+
 /*cake pg*/
 .mic {
     position:relative;
@@ -734,4 +754,5 @@ a {
 	animation: none;
 	transition: opacity .4s, transform .4s;
 }
+
 
