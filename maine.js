@@ -5,89 +5,94 @@ if (container) {
     let startX = 0;
     let currentCard = null;
 
-    const cardColors=[
-        "#b2df8a",
-        "#a6cee1",
-        "#1f78b4",
-        "#33a02b",
-        "#fc9a99",
-        "#e21a1c",
-        "#fdbe70",
-        "#ff7f00",
-        "#cab2d6",
-        "#6a3d9a",
-    ]
-
-    for (let i=10; i>=1; i--) {
-        const card = document.createElement("div");
-        card.className="card";
-        card.style.backgroundColor = cardColors[i-1];
-        const cardContent = document.createElement("div");
-        cardContent.className="card-content";
-        cardContent.textContent = "fuck meee";
-        card.appendChild(cardContent);
-        container.appendChild(card);
+    function getTopCard() {
+        // This now matches the class created in the loop
+        return container.querySelector(".ctextCont:last-child");
     }
 
-    function getTopCard(){
-        return container.querySelector(".card:last-child");
-    }
-
-    container.addEventListener("mousedown", (e)=> {
+    // --- Swipe Logic (Stays the same, but now it finds the cards!) ---
+    container.addEventListener("mousedown", (e) => {
         currentCard = getTopCard();
         if (!currentCard) return;
         isDragging = true;
         startX = e.clientX;
         currentCard.style.transition = "none";
-
     });
-    container.addEventListener("mousemove", (e)=> {
-        if(!isDragging || !currentCard)return;
+
+    // Use window for mousemove/up so it doesn't "glitch" if you move too fast
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging || !currentCard) return;
         const deltaX = e.clientX - startX;
-        currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX/10}deg)`;
+        currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 15}deg)`;
     });
 
-    container.addEventListener("mouseup", (e)=>{
-        if(!isDragging || !currentCard) return;
+    window.addEventListener("mouseup", (e) => {
+        if (!isDragging || !currentCard) return;
         const deltaX = e.clientX - startX;
         handleSwipe(deltaX);
     });
 
-    container.addEventListener("touchstart", (e)=> {
+    // Touch Events
+    container.addEventListener("touchstart", (e) => {
         currentCard = getTopCard();
-        if(!currentCard) return;
+        if (!currentCard) return;
         isDragging = true;
         startX = e.touches[0].clientX;
-        currentCard.style.transition="none";
+        currentCard.style.transition = "none";
     });
 
-    container.addEventListener("touchmove", (e)=> {
-        if(!isDragging || !currentCard) return;
+    container.addEventListener("touchmove", (e) => {
+        if (!isDragging || !currentCard) return;
         const deltaX = e.touches[0].clientX - startX;
-        currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX/10}deg)`
+        currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 15}deg)`;
     });
-    container.addEventListener("touchend", (e)=> {
-        if(!isDragging || !currentCard) return;
-        const deltaX= e.changedTouches[0].clientX - startX;
+
+    container.addEventListener("touchend", (e) => {
+        if (!isDragging || !currentCard) return;
+        const deltaX = e.changedTouches[0].clientX - startX;
         handleSwipe(deltaX);
     });
 
     function handleSwipe(deltaX) {
-        const sensitivity = 50;
-        if(Math.abs(deltaX)> sensitivity) {
+        const sensitivity = 80;
+        if (Math.abs(deltaX) > sensitivity) {
             currentCard.style.transition = "transform 0.4s ease, opacity 0.4s ease";
-            currentCard.style.transform = `translateX(${deltaX > 0 ? 1000: -1000}px) rotate(${deltaX>0 ? 45:-45}deg)`;
+            currentCard.style.transform = `translateX(${deltaX > 0 ? 1000 : -1000}px) rotate(${deltaX > 0 ? 45 : -45}deg)`;
             currentCard.style.opacity = 0;
-            setTimeout(()=>{
-                currentCard.remove();
-                currentCard=null;
+            const cardToRemove = currentCard;
+            setTimeout(() => {
+                cardToRemove.remove();
             }, 400);
-        } else{
+        } else {
             currentCard.style.transition = "transform 0.3s ease";
             currentCard.style.transform = "translateX(0) rotate(0)";
         }
-        isDragging =  false;
+        isDragging = false;
+        currentCard = null;
     }
+
+    function fitText(card) {
+        const p = card.querySelector('p');
+        if (!p) return;
+        let fontSize = 48; 
+        p.style.fontSize = fontSize + "px";
+        p.style.height = "auto";
+        const maxHeight = card.clientHeight - 40;
+        while (p.scrollHeight > maxHeight && fontSize > 14) {
+            fontSize--;
+            p.style.fontSize = fontSize + "px";
+        }
+
+        if(p.scrollHieght > maxHeight) {
+            p.style.height = maxHeight + "px";
+            p.style.overflowY = "auto";
+        }
+    }
+
+    // Run fitText on all cards
+    document.querySelectorAll('.ctextCont').forEach(card => {
+        fitText(card);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -100,39 +105,104 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  new Swiper('.card-wrapper', {
-    spaceBetween: 25,
-    loop: true,
-    
-    // If we need pagination
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-        dynamicBullets: true
-    },
-
-    // Navigation arrows
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-
-    breakpoints: {
-        0: {
-            slidesPerView: 1
+  if (document.querySelector('.card-wrapper')) {
+    new Swiper('.card-wrapper', {
+        spaceBetween: 25,
+        loop: true,
+        
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            dynamicBullets: true
         },
-        768: {
-            slidesPerView: 2
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
         },
-        1024: {
-            slidesPerView: 3,
+
+        breakpoints: {
+            0: {
+                slidesPerView: 1
+            },
+            768: {
+                slidesPerView: 2
+            },
+            1024: {
+                slidesPerView: 3,
+            }
         }
+    });
+  }
+    const dvdCont = document.querySelector('.dvdCont');
+    const logoEls = dvdCont ? dvdCont.querySelectorAll('div') : [];
+
+    if (dvdCont && logoEls.length > 0) {
+        let logoStates = Array.from(logoEls).map((el, i) => ({
+            el: el,
+            toRight: i % 2 === 0,
+            toBottom: i % 3 === 0,
+            speed: 2
+        }));
+
+        setInterval(() => {
+            logoStates.forEach((logo, i) => {
+                const rect = logo.el.getBoundingClientRect();
+                let top = logo.el.offsetTop;
+                let left = logo.el.offsetLeft;
+
+                // --- A. Screen Edge Collision (STRICT) ---
+                // We use 0 and window height/width to ensure they use the WHOLE screen
+                if (top <= 0) {
+                    logo.toBottom = true;
+                    top = 1; 
+                }
+                if (top + rect.height >= window.innerHeight) {
+                    logo.toBottom = false;
+                    top = window.innerHeight - rect.height - 1; 
+                }
+                if (left <= 0) {
+                    logo.toRight = true;
+                    left = 1; 
+                }
+                if (left + rect.width >= window.innerWidth) {
+                    logo.toRight = false;
+                    left = window.innerWidth - rect.width - 1; 
+                }
+
+                // --- C. Logo vs Logo Collision (With Anti-Stuck Shove) ---
+                logoStates.forEach((otherLogo, j) => {
+                    if (i === j) return;
+                    const otherRect = otherLogo.el.getBoundingClientRect();
+
+                    if (rect.right >= otherRect.left && rect.left <= otherRect.right &&
+                        rect.bottom >= otherRect.top && rect.top <= otherRect.bottom) {
+                        
+                        // Bounce them away from each other
+                        logo.toRight = !logo.toRight;
+                        logo.toBottom = !logo.toBottom;
+                        
+                        // Instant shove to prevent the "vibration" glitch
+                        top += logo.toBottom ? 2 : -2;
+                        left += logo.toRight ? 2 : -2;
+                    }
+                });
+
+                // Update Position
+                top = logo.toBottom ? top + logo.speed : top - logo.speed;
+                left = logo.toRight ? left + logo.speed : left - logo.speed;
+
+                logo.el.style.top = `${top}px`;
+                logo.el.style.left = `${left}px`;
+            });
+        }, 20);
     }
-});
 });
 
 //where the mic button starts ver4
-const URL = "https://teachablemachine.withgoogle.com/models/mTwRa3OaY/";
+const URL = "https://teachablemachine.withgoogle.com/models/Se6yM_94j/";
 let recognizer = null;
 let classLabels = [];
 let lastDetectionTime = 0;
@@ -152,49 +222,51 @@ async function initModel() {
 }
 
 async function startMic() {
-    isPressed = true; // Lock the gate OPEN
+    isPressed = true; 
     micButton.classList.add('is-recording');
 
     await initModel();
     
-    // Check if user already let go before model finished loading
+    // Check if user let go during loading
     if (!isPressed) return; 
 
+    // --- MOVE STARTTIME HERE ---
+    // This resets the timer AFTER the model and permissions are ready
+    const startTime = Date.now(); 
+
     recognizer.listen(result => {
-        // THE CRITICAL CHECK: If button isn't held, do absolutely nothing
         if (!isPressed) return; 
 
+        // Now this 500ms actually protects against the initial 'pop'
+        if (Date.now() - startTime < 500) return; 
+        
         if (!result || !result.scores) return;
         
         const scores = result.scores;
         const maxScore = Math.max(...scores);
         const index = scores.indexOf(maxScore);
         const detectedLabel = classLabels[index];
-        const now = Date.now();
-        const cooldown = 500;
 
-        if (maxScore > 0.85 && detectedLabel === "blow" && (now - lastDetectionTime > cooldown)) {
-            lastDetectionTime = now;
-            console.log("BLOW SOUND DETECTED");
+        if (maxScore > 0.77 && detectedLabel === "blow") {
+            console.log("SUCCESS: Candles Blown!");
+
             const flames = document.querySelectorAll('.flame');
-            // 2. Add the 'flame-out' class to each one
             flames.forEach(flame => {
                 flame.classList.add('flame-out');
             });
 
-            const nextBtn = document.querySelector('.button');
+            const nextBtn = document.querySelector('.btn');
             if (nextBtn) {
                 nextBtn.classList.add('show-btn');
             }
-            // 3. Optional: Stop the mic automatically once they are blown out
+
             stopMic();
         }
     }, {
-        probabilityThreshold: 0.85,
+        probabilityThreshold: 0.77,
         invokeCallbackOnNoiseAndUnknown: true,
         overlapFactor: 0.4
     });
-    console.log("Started listening");
 }
 
 function stopMic() {
