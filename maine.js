@@ -1,4 +1,6 @@
 const container = document.getElementById("cardCont");
+let startY = 0;
+let isHorizontal = null;
 
 if (container) {
     let isDragging = false;
@@ -36,15 +38,34 @@ if (container) {
     container.addEventListener("touchstart", (e) => {
         currentCard = getTopCard();
         if (!currentCard) return;
+
         isDragging = true;
+        isHorizontal = null;
+
         startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+
         currentCard.style.transition = "none";
     });
 
     container.addEventListener("touchmove", (e) => {
         if (!isDragging || !currentCard) return;
+
         const deltaX = e.touches[0].clientX - startX;
-        currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 15}deg)`;
+        const deltaY = e.touches[0].clientY - startY;
+
+        // Decide direction only once
+        if (isHorizontal === null) {
+            isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+        }
+
+        // If vertical scroll → do NOTHING (let browser scroll)
+        if (!isHorizontal) return;
+
+        // Horizontal swipe only
+        e.preventDefault();
+        currentCard.style.transform =
+            `translateX(${deltaX}px) rotate(${deltaX / 15}deg)`;
     });
 
     container.addEventListener("touchend", (e) => {
