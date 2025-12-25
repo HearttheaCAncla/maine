@@ -13,6 +13,7 @@ body {
     align-items:center;
     margin:0;
     overflow:hidden;
+    position:relative;
 }
 
 .menuBox {
@@ -60,26 +61,124 @@ body {
     font-style: italic;
 }
 
-.button {
-    margin-top:20%;
-    margin-bottom:7%;
-    font-size: 1rem;
-    border-radius: 100px;
-    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
-    box-sizing: border-box;
-    background-color: #91ADC8;
-    color:white;
-    text-decoration: none;
-    transition: all 235ms ease-in-out;
-    line-height: .5rem;
-    padding: 15px;
-    font-size:larger;  
+.boxBut {
+    cursor: pointer;
+    border: 4px solid white;
+    background-color: gray;
+    padding-bottom: 5px;
+    transition: 0.1s ease-in-out;
+    user-select: none;
+    margin:2px;
+    overflow:hidden;
 }
 
-.button:hover {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
-  transform: translate3d(0, 2px, 0);
+.button {
+    display:block;
+    background-color: #393D7E;
+    border: 3px solid #5c61c0;
+    color:white;
+    padding: 2px 7px;
 }
+
+.button span {
+    font-size: 1.2em;
+    letter-spacing: 1px;
+}
+
+.boxBut:active {
+    padding: 0;
+    margin-bottom: 7px;
+    transform: translateY(5px);
+}
+
+.dvdCont {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* THIS is what makes them spin normally and stay small */
+.dvdCont div {
+    position: absolute;
+    white-space: nowrap;
+    line-height: 1;       /* Crucial: kills top/bottom ghost space */
+    width: fit-content;   /* Crucial: box is only as wide as text */
+    height: fit-content;  /* Crucial: box is only as high as text */
+    margin: 0;
+    padding: 0;
+    transform-origin: center center; 
+    display: flex;        /* Centers text inside its own tiny box */
+    align-items: center;
+    justify-content: center;
+}
+
+.h1 {
+    position:absolute;
+    font-size:1.5rem;
+    top:0;
+    left:0;
+    animation:spin 1s linear infinite;
+}
+
+.h2 {
+    position:absolute;
+    font-size:2rem;
+    top:0;
+    right:0;
+}
+
+.h3 {
+    position:absolute;
+    font-size:4rem;
+    bottom:0;
+    left:0;
+}
+
+.h4 {
+    position:absolute;
+    font-size:10px;
+    bottom:0;
+    right:0;
+}
+
+.h5 {
+    position:absolute;
+    top:30%;
+    left:50%;
+    animation:spin 0.5s linear infinite;
+}
+
+.h6 {
+    position:absolute;
+    font-size:2rem;
+    left:10%;
+    bottom:40%;
+}
+
+.h7{
+    position:absolute;
+    font-size:2.2rem;
+    right:15%;
+    bottom:50%;
+    animation:spin 2s linear infinite;
+}
+
+.h8 {
+    position:absolute;
+    font-size:3.2rem;
+    top:40%;
+}
+
+
+@keyframes spin{
+    0% {transform:rotate(0deg);}
+    100% {transform:rotate(360deg);}
+}
+
 /*pg2*/
 .p2bg {
     width: 100svw;
@@ -93,8 +192,6 @@ body {
     justify-content: space-evenly;
     min-height: 400px;
     align-items:center;
-    
-    
 }
 
 .icons {
@@ -150,59 +247,124 @@ a {
 /*letter page*/
 .cardCont {
     position: relative;
-    width:400px;
+    width:90%;
+    max-width:400px;
     height:500px;
+    margin:80px auto 50px auto;
+    display:block;
 }
-.card{
+.ctextCont{
     position:absolute;
     width:100%;
     height:100%;
     border-radius: 10px;
     display:flex;
     justify-content:center;
-    align-items:center;
-    font-size: 48px;
-    background-color:white;
+    flex-direction: column;
+    justify-content: flex-start;
     user-select:none;
+    box-sizing:border-box;
+    overflow:hidden;
+    text-align:left;
+    padding:15px;
     transition: transform 0.3s, opacity 0.3s ease;
 }
 
-.card:not(:last-child){
+.ctextCont .cardText {
+    width:100%;
+    word-break: normal;
+    overflow-wrap:break-word;
+    line-height:1.2;
+    height:auto;
+    display:block;
+    margin: 0;
+    color:black;
+    overflow:auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.3) transparent;
+    font-family: "Playfair Display", serif; /* Inherits your bday font */
+}
+
+.name {
+    margin-bottom:0;
+    
+}
+.ctextCont p::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ctextCont p::-webkit-scrollbar-track {
+    background: transparent; /* This kills the white background */
+}
+
+.ctextCont p::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.ctextCont:not(:last-child){
     top:15px;
+}
+
+.ins {
+    position: absolute;
+    font-family: "Sekuya", system-ui;
+    font-size:larger;
+    top: -50px; 
+    left: 0;           /* Start from the absolute left */
+    width: 100%;       /* Stretch across the whole container */
+    text-align: center; /* Center the text inside that 100% width */
+    z-index: 999; 
+    color: #ffffff; 
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    pointer-events: none; 
 }
 
 /*photo page*/
 .container.swiper {
     width: 90%;
     max-width: 900px;
-    position: relative;
-    display:flex;
+    margin: 0 auto;         /* Centers the whole swiper on the page */
+    position: relative;     /* Required for arrows to position correctly */
+    display: block;
+    height:80svh !important;
 }
 
 .card-wrapper {
-    display:flex;
-    margin: 0 60px 35px;
-    padding: 20px 0px;
+    margin: 0 60px 35px;    /* The 60px side margins make room for arrows */
+    padding: 0;
     overflow: hidden;
+    position: relative;
+    height:100%;
+}
+
+.card-list.swiper-wrapper {
+    height: 100% !important;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.card-item.swiper-slide {
+    height: 100% !important; /* Fill the wrapper height */
+    display: flex !important;
+    align-items: center !important;     /* Vertical center */
+    justify-content: center !important;  /* Horizontal center */
+    padding:0;
+    margin:0;
+    width:100%;
+    box-sizing:border-box;
 }
 
 .card-image {
-    width: 100%;
+    max-width: 100%;
+    max-height: 80%;        /* Prevents horizontal overflow */
     height: auto;
-    display: block;
-    margin-top: 22px;
+    width:auto;
+    max-height:80%;
+    object-fit: contain;
 }
-
-.card-list .card-item .card-image {
-    width:100%;
-    user-select:none;
-    display:block;
-    overflow: hidden;
-    box-sizing: border-box;
-    list-style: none;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.6);
-}
-
 .card-list .card-link .card-image {
     width: 100%;
     aspect-ratio: 16/9;
@@ -213,23 +375,32 @@ a {
     padding:0px;
 }
 
-.card-item {
-    height: auto;
-}
-
 .swiper-button-next,
 .swiper-button-prev {
-  width: 40px;  
-  height: 40px;
-  display: flex;  
-  align-items: center;
-  justify-content: center;
-  box-shadow: none;  
+    width: 40px;  
+    height: 40px;
+    display: flex;  
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;  
+    top: 52% !important;
+    transform: translateY(-50%);
+    z-index: 10;
 }
 
 :root {
   --swiper-navigation-color: black;
   --swiper-pagination-color: black;
+}
+
+.swiper-pagination {
+    position:absolute;
+    bottom: 10px !important; /* Adjust this to move it up/down */
+    left: 0;
+    width: 100%;
+    z-index: 15;
+    /* Ensure it doesn't have a background or height that pushes content */
+    height: auto !important;
 }
 
 /*cake pg*/
@@ -301,14 +472,14 @@ a {
     z-index: 2;
 }
 
-.cakeCont .button {
+.cakeCont .btn {
     position:relative;
     top:10px;
     white-space:nowrap;
     opacity:0;
 }
 
-.cakeCont .button.show-btn {
+.cakeCont .btn.show-btn {
     opacity: 1;
     pointer-events: all;
 }
@@ -342,6 +513,10 @@ a {
     font-family: serif;      /* Match your button font */
 }
 
+.controls > .btn {
+    padding:10px 20px;
+}
+
 .cake {
 	width: 250px;
 	height: 200px;
@@ -351,6 +526,10 @@ a {
 .cakeCont > p {
     position:relative;
     bottom: 30%;
+    font-size:larger;
+    font-family: "Sekuya", system-ui;
+    font-style: normal;
+    color:white;
 }
 
 @media (min-width: 1024px) {
